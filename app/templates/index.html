@@ -1,0 +1,120 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<section class="hero-panel mb-5" id="home">
+<div class="row align-items-center">
+	<div class="col-lg-6 mb-4 mb-lg-0">
+		<p class="eyebrow text-uppercase mb-2">Smarter Farming</p>
+		<h1 class="hero-title mb-3">Decision support for every acre.</h1>
+		<p class="lead text-muted mb-4">
+			Harvestify blends trusted agronomy with AI predictions so you can choose the right crop, fertilizer, and
+			plant protection plan in minutes.
+		</p>
+            <div class="d-flex flex-wrap gap-3">
+            	<a class="btn btn-success btn-lg mr-3 mb-3" data-i18n-key="Start with your soil" href="{{ url_for('crop_recommend') }}">Start with your soil</a>
+            	<a class="btn btn-outline-secondary btn-lg mb-3" data-i18n-key="Scan plant health" href="{{ url_for('disease_prediction') }}">Scan plant health</a>
+        	</div>
+		<div class="hero-metrics mt-4">
+			<div>
+				<h3>15K+</h3>
+				<p class="text-muted mb-0">Recommendations issued</p>
+			</div>
+			<div>
+				<h3>120+</h3>
+				<p class="text-muted mb-0">Supported districts</p>
+			</div>
+			<div>
+				<h3>48 hrs</h3>
+				<p class="text-muted mb-0">Support turnaround</p>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-6">
+		<div class="hero-visual">
+			<img src="{{ url_for('static', filename='images/farm_background_1.jpg') }}" alt="Farmland dashboard">
+			<div class="hero-card shadow">
+				<p class="mb-1 text-muted text-uppercase small">Live soil snapshot</p>
+				<h5 class="mb-3">Soil ready for Wheat</h5>
+				<ul class="list-unstyled mb-0 small text-muted">
+					<li>Moisture • Optimal</li>
+					<li>Nutrients • Balanced</li>
+					<li>Disease risk • Low</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+</section>
+
+<section class="section-card mb-5">
+	<div class="row align-items-center">
+		<div class="col-lg-6 order-lg-2 mb-4 mb-lg-0">
+			<img src="{{ url_for('static', filename='images/core.jpg') }}" class="img-fluid rounded-lg shadow-sm"
+				alt="Team in the field" />
+		</div>
+		<div class="col-lg-6">
+			<p class="eyebrow text-uppercase mb-2">About Harvestify</p>
+			<h2 class="mb-3">Your agronomy co-pilot.</h2>
+			<p class="text-muted mb-4">
+				We combine district-wise datasets, on-ground learnings, and ML models to recommend the best growing
+				strategy for your land parcel. Keep yield predictable despite changing weather.
+			</p>
+			<ul class="list-icon">
+				<li>Precise crop and fertilizer suggestions using soil chemistry inputs</li>
+				<li>Rapid disease detection with treatment guides</li>
+				<li>Lightweight experience built for low-bandwidth regions</li>
+			</ul>
+		</div>
+	</div>
+</section>
+
+<section class="services-grid mb-5">
+	<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+		<div class="mb-3 mb-md-0">
+			<p class="eyebrow text-uppercase mb-2">Our capabilities</p>
+			<h2 class="mb-0">Everything you need in one workspace.</h2>
+		</div>
+		<a href="{{ url_for('fertilizer_recommendation') }}" class="btn btn-link font-weight-semibold">Explore all
+			&rarr;</a>
+	</div>
+	<div class="row">
+		<div class="col-lg-4 mb-4">
+			<div class="service-tile">
+				<div class="icon-circle bg-success-soft">
+					<i class="fa fa-leaf text-success"></i>
+				</div>
+				<h4>Crop planning</h4>
+				<p class="text-muted">Know the best-suited crop for your soil profile with granular nutrient inputs.</p>
+				<a href="{{ url_for('crop_recommend') }}" class="stretched-link" data-i18n-key="Launch crop tool">Launch crop tool</a>
+			</div>
+		</div>
+		<div class="col-lg-4 mb-4">
+			<div class="service-tile">
+				<div class="icon-circle bg-warning-soft">
+					<i class="fa fa-flask text-warning"></i>
+				</div>
+				<h4>Fertilizer pairing</h4>
+				<p class="text-muted">Balance macro & micro nutrients to avoid overuse and unlock soil health.</p>
+				<a href="{{ url_for('fertilizer_recommendation') }}" class="stretched-link" data-i18n-key="Open fertilizer tool">Open fertilizer tool</a>
+			</div>
+		</div>
+		<div class="col-lg-4 mb-4">
+			<div class="service-tile">
+				<div class="icon-circle bg-info-soft">
+					<i class="fa fa-camera text-info"></i>
+				</div>
+				<h4>Disease scanning</h4>
+				<p class="text-muted">Upload a photo, detect probable diseases, and act before yield is lost.</p>
+				<a href="{{ url_for('disease_prediction') }}" class="stretched-link" data-i18n-key="Check plant health">Check plant health</a>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="cta-panel text-center">
+	<p class="eyebrow text-uppercase mb-2">Ready to get started?</p>
+	<h2 class="mb-3">Plug Harvestify into your next growing season.</h2>
+	<p class="text-muted mb-4">Bring your soil test reports or simply start with our guided questions.</p>
+	<a class="btn btn-success btn-lg mr-2" data-i18n-key="Create plan" href="{{ url_for('crop_recommend') }}">Create plan</a>
+	<a class="btn btn-outline-secondary btn-lg" data-i18n-key="Upload plant photo" href="{{ url_for('disease_prediction') }}">Upload plant photo</a>
+</section>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<section class="tool-page">
+	<div class="tool-intro text-center mb-5">
+		<p class="eyebrow text-uppercase mb-2 text-success">Crop intelligence</p>
+		<h2 class="mb-3">Find the most suitable crop for your soil profile.</h2>
+		<p class="text-muted">Enter your soil test readings, select your region, and Harvestify will combine weather &
+			yield data to recommend what to plant next.</p>
+	</div>
+
+	<div class="tool-card shadow-sm">
+		<form method="POST" action="{{ url_for('crop_prediction') }}">
+			<div class="input-grid">
+				<div class="form-group">
+					<label for="Nitrogen">Nitrogen (N)</label>
+					<input type="number" class="form-control" id="Nitrogen" name="nitrogen"
+						placeholder="e.g. 50" required>
+				</div>
+				<div class="form-group">
+					<label for="Phosphorous">Phosphorous (P)</label>
+					<input type="number" class="form-control" id="Phosphorous" name="phosphorous"
+						placeholder="e.g. 50" required>
+				</div>
+				<div class="form-group">
+					<label for="Pottasium">Potassium (K)</label>
+					<input type="number" class="form-control" id="Pottasium" name="pottasium"
+						placeholder="e.g. 50" required>
+				</div>
+				<div class="form-group">
+					<label for="ph">pH level</label>
+					<input type="number" class="form-control" id="ph" name="ph" step="0.01"
+						placeholder="e.g. 6.5" required>
+				</div>
+				<div class="form-group">
+					<label for="Rainfall">Rainfall (mm)</label>
+					<input type="number" class="form-control" id="Rainfall" name="rainfall" step="0.01"
+						placeholder="Average rainfall" required>
+				</div>
+				<div class="form-group form-group--full">
+					<label for="sts" class="d-block">State</label>
+					<select onchange="print_city('state', this.selectedIndex);" id="sts" name="stt"
+						class="form-control" required></select>
+					<br />
+					<label for="state" class="d-block">City</label>
+					<select id="state" class="form-control" name="city" required></select>
+				</div>
+			</div>
+			<div class="text-center mt-4">
+				<button type="submit" class="btn btn-success btn-lg px-5">Predict best crop</button>
+			</div>
+		</form>
+	</div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		if (typeof print_state === 'function') {
+			print_state('sts');
+		}
+	});
+</script>
+{% endblock %}
