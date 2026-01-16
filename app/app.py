@@ -11,6 +11,7 @@ import requests
 import config
 import pickle
 import io
+import os
 import torch
 from torchvision import transforms
 from PIL import Image
@@ -404,5 +405,9 @@ def production_predict():
 
 
 # ===============================================================================================
+'''if __name__ == '__main__':
+    app.run(debug=True)'''
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
+
