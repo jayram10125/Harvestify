@@ -5,8 +5,8 @@ from flask import Flask, render_template, request
 from markupsafe import Markup
 import numpy as np
 import pandas as pd
-from utils.disease import disease_dic
-from utils.fertilizer import fertilizer_dic
+from utils.disease import disease_dic    
+from utils.fertilizer import fertilizer_dic 
 import requests
 import config
 import pickle
@@ -14,7 +14,10 @@ import io
 import torch
 from torchvision import transforms
 from PIL import Image
-from utils.model import ResNet9
+from utils.model import ResNet9   
+
+
+
 # ==============================================================================================
 
 # -------------------------LOADING THE TRAINED MODELS -----------------------------------------------
@@ -86,6 +89,12 @@ scaler = pickle.load(open(scaler_path, 'rb'))
 
 # Load fertilizer dataset for recommendations
 fertilizer_df = pd.read_csv('Data-raw/fertilizer.csv')
+
+# loading production prediction model
+production_model_path = 'models/production_pipeline.pkl'
+production_model = pickle.load(open(production_model_path, 'rb'))
+
+
 
 
 # =========================================================================================
@@ -256,6 +265,9 @@ def fertilizer_recommendation():
 
     return render_template('fertilizer.html', title=title)
 
+@app.route('/Production')
+def Production_prediction():
+    return render_template('production.html')
 # render disease prediction input page
 
 
@@ -356,6 +368,41 @@ def disease_prediction():
     return render_template('disease.html', title=title)
 
 
+@app.route('/production-predict', methods=['POST'])
+def production_predict():
+    title = 'Harvestify - Production Prediction'
+
+    # Get form data
+    crop = request.form['Crop']
+    season = request.form['Season']
+    state = request.form['State']
+    area = float(request.form['Area'])
+    rainfall = float(request.form['Annual_Rainfall'])
+    fertilizer = float(request.form['Fertilizer'])
+    pesticide = float(request.form['Pesticide'])
+
+    # Create dataframe (same order as training)
+    input_df = pd.DataFrame([{
+        'Crop': crop,
+        'Season': season,
+        'State': state,
+        'Area': area,
+        'Annual_Rainfall': rainfall,
+        'Fertilizer': fertilizer,
+        'Pesticide': pesticide
+    }])
+
+    # Prediction (model trained on log1p)
+    log_prediction = production_model.predict(input_df)
+    prediction = np.expm1(log_prediction)[0]
+
+    return render_template(
+        'production-result.html',
+        prediction=round(prediction, 2),
+        title=title
+    )
+
+
 # ===============================================================================================
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=True)
